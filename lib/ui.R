@@ -2,31 +2,34 @@ suppressMessages(library(shiny))
 suppressMessages(library(rCharts))
 suppressMessages(library(doSNOW))
 suppressMessages(library(foreach))
-load(file = "./data/community.RDA")
+# load(file = "./data/cleandata.RDS")
+a <- readRDS("cleandata.RDS")
+b <- as.character(levels(a$`Complaint Type`))
 
-googleAnalytics <- function(account="UA-53239073-3"){
-  HTML(paste("<script type=\"text/javascript\">
-             
-             var _gaq = _gaq || [];
-             _gaq.push(['_setAccount', '",account,"']);
-             _gaq.push(['_setDomainName', 'miningchi2.shinyapps.io']);
-             _gaq.push(['_trackPageview']);
-             
-             (function() {
-             var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-             ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-             })();
-             
-             </script>", sep=""))
-}
+
+# googleAnalytics <- function(account="UA-53239073-3"){
+#   HTML(paste("<script type=\"text/javascript\">
+#              
+#              var _gaq = _gaq || [];
+#              _gaq.push(['_setAccount', '",account,"']);
+#              _gaq.push(['_setDomainName', 'miningchi2.shinyapps.io']);
+#              _gaq.push(['_trackPageview']);
+#              
+#              (function() {
+#              var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+#              ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+#              var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+#              })();
+#              
+#              </script>", sep=""))
+# }
 
 shinyUI(pageWithSidebar(
   
   ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   ## Application title
   ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  headerPanel("MiningChi - Chicago Crime Data Visualization"),
+  headerPanel("New York City Complaint Data Visualization"),
   
   ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   ## Sidebar Panel
@@ -41,25 +44,19 @@ shinyUI(pageWithSidebar(
     
     wellPanel(
       helpText(HTML("<b>BASIC SETTINGS</b>")),
-      selectInput("crimetype", "Choose Crime Type:", choice = c("HOMICIDE","VIOLENCE","PROPERTYCRIME","THEFT","CRIM SEXUAL ASSAULT","BURGLARY","BATTERY","ROBBERY",
-                                            "INTERFERENCE WITH PUBLIC OFFICER","DECEPTIVE PRACTICE","ARSON","CRIMINAL DAMAGE",
-                                            "ASSAULT","NARCOTICS","CRIMINAL TRESPASS","OTHER OFFENSE","PUBLIC PEACE VIOLATION",
-                                            "SEX OFFENSE","OFFENSE INVOLVING CHILDREN","PROSTITUTION","WEAPONS VIOLATION","KIDNAPPING",
-                                            "LIQUOR LAW VIOLATION","STALKING","NON-CRIMINAL","INTIMIDATION","OBSCENITY",
-                                            "PUBLIC INDECENCY","OTHER NARCOTIC VIOLATION","GAMBLING","OTHER OFFENSE ","NON - CRIMINAL",
-                                            "NON-CRIMINAL (SUBJECT SPECIFIED)","INTERFERE WITH PUBLIC OFFICER","OFFENSES INVOLVING CHILDREN","RITUALISM")),
-      helpText("Examples: BATTERY, THEFT etc."),
+      selectInput("comptype", "Choose Complaint Type:", choice = b),
+      helpText("Examples: Trans Fat, Unlicesed Dog etc."),
       
-      dateInput("startdate", "Start Date of Data Collection:", value = "2000-01-01", format = "mm-dd-yyyy",
-                min = "2000-01-01", max = "2014-09-29"),
+      dateInput("startdate", "Start Date of Data Collection:", value = "2010-01-01", format = "mm-dd-yyyy",
+                min = "2010-01-01", max = "2016-02-16"),
       
-      dateInput("enddate", "End Date of Data Collection:", value = "2015-01-02", format = "mm-dd-yyyy",
-                min = "startdate", max = "2014-09-30"),
+      dateInput("enddate", "End Date of Data Collection:", value = "2016-02-16", format = "mm-dd-yyyy",
+                min = "startdate", max = "2016-02-16"),
       ##Need some validation that enddate is after start date
       helpText("MM-DD-YEAR as Date Format")),
     
     wellPanel(
-      selectInput('community', 'Community Area', community$Community.Area, selected = "Chicago-All",selectize=TRUE),
+      selectInput('borough', 'Borough', c(levels(a$Borough),"NYC-ALL"), selected = "NYC-ALL",selectize=TRUE),
       helpText("Applies to Crime Map, Analysis, and Weather sections")),
     
     wellPanel(
@@ -95,8 +92,8 @@ shinyUI(pageWithSidebar(
       tabPanel("Weather", plotOutput("weather")),
       tabPanel("Data", dataTableOutput("datatable")),
       tabPanel("Credits", includeMarkdown("docs/credits.md"))
-    ), 
-googleAnalytics()  
+    )#, 
+# googleAnalytics()  
   )
 
 ))
