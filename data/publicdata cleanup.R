@@ -20,3 +20,4 @@ pubtoilet<-rbind(to1,to2)
 
 rm(to1,to2)
 saveRDS(pubtoilet, "pubtoilet.RDS")
+write.csv(pubtoilet,"pubtoilet.csv")
