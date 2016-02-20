@@ -21,6 +21,10 @@ crime$Lat <- unlist(strsplit(as.character(crime$Location.1), split=c(", ")))[1]
 crime$Lat <- unlist(strsplit(crime$Lat, "\\("))[2]
 crime$Long <- unlist(strsplit(as.character(crime$Location.1), split=c(", ")))[2]
 crime$Long <- unlist(strsplit(crime$Long, "\\)"))[1]
+options(digits=8)
+crime$Lat <- as.numeric(crime$Lat)
+crime$Long <- as.numeric(crime$Long)
+
 
 # Generate crime freq table grouped by year.
 #crime_year <- as.matrix(table(crime$Occurrence.Year, crime$Offense))
