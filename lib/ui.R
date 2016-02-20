@@ -15,21 +15,9 @@ vars2 <- c(
 )
 
 vars3 <- c(
-  "All Vehicles" = "",
-  "Ambulance" = "AMBULANCE",
-  "Bicycle" = "BICYCLE",
-  "Bus" = "BUS",
-  "Fire Truck" = "FIRE TRUCK",
-  "Large Commercial Vehicle(6 or more tires)" = "LARGE COM VEH(6 OR MORE TIRES)",
-  "Livery Vehicle" = "LIVERY VEHICLE",
-  "Motorcycle" = "MOTORCYCLE",
-  "Passenger" = "PASSENGER VEHICLE",
-  "Pick-up Truck" = "PICK-UP TRUCK",
-  "Scooter" = "SCOOTER",
-  "Small Commercial Vehicle(4 tires)" = "SMALL COM VEH(4 TIRES)",
-  "Sport Utility/Station Wagon" = "SPORT UTILITY / STATION WAGON",
-  "Taxi" = "TAXI",
-  "Van" = "VAN"
+  "All Toilets" = "",
+  "handicap" = "Handicap",
+  "yearround" = "Yearround"
 )
 
 vars4 <- c("All boroughs"="",
@@ -58,11 +46,13 @@ shinyUI(navbarPage("NYC Public Toilets Map", id="nav",
                                               
                                               h2("Public Toilets"),
                                               
-                                              selectInput("type", "Type", vars)
+                                              #selectInput("type", "Type", vars),
                                               #selectInput("size", "Size", vars2, selected = "NUMBER.OF.PERSONS.INJURED"),
-                                              #checkboxInput("cluster", "Add Cluster"),
-                                              #helpText("Cluster numbers show total accidents for each area", 
-                                              #         "(applies to all vehicles only)"),
+                                              helpText("Please select toilet types (leave them blank if no specification)"), 
+                                              checkboxInput("handicap", "Handicap Accessible"),
+                                              checkboxInput("yearround", "Open Year Round"),
+                                              helpText("Check to show crime data"),
+                                              checkboxInput("crime", "Add Crime Data")
                                               #radioButtons("vehicle", "Show Just One Vehicle", vars3, selected = '')
                                 ),
                                 

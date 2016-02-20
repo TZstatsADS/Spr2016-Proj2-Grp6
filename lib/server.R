@@ -18,26 +18,33 @@ shinyServer(function(input, output, session) {
       setView(lng = -73.97, lat = 40.75, zoom = 13)
   })
 
-# Add toilet markers to map  
-  drawvalue <- reactive({if (input$handicap == ''){return(cleantable)}else{
-    t <- filter(cleantable, Handicap == input$handicap | Handicap == input$handicap)
+ # Select toilet type, multiple selections are allowed
+  ttype <- reactive({
+    t <- cleantable
+   if (input$handicap == TRUE){
+        t <- filter(t, Handicap == "Yes")
+    }
+   if (input$yearround == TRUE){
+       t <- filter(t, Yearround == "Yes")
+    }
     return(t)
-  }})
-  
+  })
+
+  # Add toilet circles to map  
  observe({  
-   colorBy <- input$type
-#   sizeBy <- input$size
-  # draw <- drawvalue()
- 
-#   pal <- colorBin(heat.colors(7), c(0:7), 7)
    pal <- "red"
-   Radius <- 5
-  leafletProxy("map", data = cleantable) %>%
-    #clearShapes() %>%
-    #hideGroup('Cluster') %>%
-    addCircleMarkers(~Long, ~Lat, radius = Radius, stroke = FALSE, fillOpacity = 0.8, fillColor = pal) 
-  #%>%
-    #addLegend("bottomleft", pal=pal, values=pal, title=colorBy,
-    #          layerId="colorLegend")
- }) 
+   Radius <- 100
+   if (input$crime == TRUE){
+     leafletProxy("map", data = ttype()) %>%
+       clearShapes() %>%
+       showGroup('Crime') %>%
+       addCircles(~Long, ~Lat, radius = Radius, stroke = FALSE, fillOpacity = 0.8, fillColor = pal) 
+   }
+   else {
+     leafletProxy("map", data = ttype()) %>%
+       clearShapes() %>%
+       hideGroup('Crime') %>%
+       addCircles(~Long, ~Lat, radius = Radius, stroke = FALSE, fillOpacity = 0.8, fillColor = pal) 
+   }
+    }) 
 })
