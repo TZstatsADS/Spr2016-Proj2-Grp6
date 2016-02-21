@@ -72,7 +72,7 @@ shinyUI(navbarPage("NYC Public Toilets Map", id="nav",
                                               checkboxInput("yearround", "Open Year Round"),
                                               helpText("Check to show crime data"),
                                               checkboxInput("addcrime", "Add Crime Data"),
-                                              selectInput("crime", "Crime Type", CrimeType),
+                                              selectInput("crime", "Crime Type", CrimeType, selected = "Murder"),
                                               selectInput("month", "Month", Month),
                                               selectInput("day", "Day", Day),
                                               selectInput("hour", "Hour", Hour)
