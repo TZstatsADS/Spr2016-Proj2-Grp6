@@ -102,12 +102,18 @@ shinyServer(function(input, output, session) {
                 #pal <- "red"
                 pal <- colorFactor(palette()[-1], levels(crime$Offense))
                 Radius <- 10
-                leafletProxy("map", data = cdata()) %>%
-                        clearShapes() %>%
-                        #showGroup('crime') %>%
-                        addCircles(~Long, ~Lat, radius = Radius, stroke = FALSE, fillOpacity = 0.8, fillColor = pal(cdata()[["Offense"]])) %>%
-                        addLegend("bottomleft", pal=pal, values=cdata()[["Offense"]], title="crime",
-                          layerId="colorLegend")
+                if (length(as.matrix(cdata())) == 0) {
+                        leafletProxy("map") %>%
+                                clearShapes()
+                }
+                else {
+                        leafletProxy("map", data = cdata()) %>%
+                                clearShapes() %>%
+                                #showGroup('crime') %>%
+                                addCircles(~Long, ~Lat, radius = Radius, stroke = FALSE, fillOpacity = 0.8, fillColor = pal(cdata()[["Offense"]])) %>%
+                                addLegend("bottomleft", pal=pal, values=cdata()[["Offense"]], title="crime",
+                                          layerId="colorLegend")
+                }
         }) 
         
         
