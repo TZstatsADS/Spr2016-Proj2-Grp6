@@ -1,0 +1,111 @@
+---
+title: "Clean Crime Data"
+author: "Group 6"
+date: "February 19, 2016"
+output: html_document
+---
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(lattice)
+library(reshape)
+# Read and seclect data.
+
+crime <- read.csv("data/NYPD_7_Major_Felony_Incidents.csv", header = T)
+colnames(crime)
+crime <- crime[which(crime$Occurrence.Year == 2015), ]
+crime <- na.omit(crime)
+crime <- crime[ , c("Occurrence.Date", "Day.of.Week", "Occurrence.Month", "Occurrence.Day", "Occurrence.Year", "Occurrence.Hour", "Offense", "Borough", "XCoordinate", "YCoordinate", "Location.1")]
+
+location <- unlist(strsplit(as.character(crime$Location.1), split=c(", ")))
+index1 <- seq(1, length(location), 2)
+index2 <- seq(2, length(location), 2)
+crime$Lat <- location[index1]
+crime$Lat <- unlist(strsplit(crime$Lat, "\\("))[index2]
+crime$Long <- location[index2]
+crime$Long <- unlist(strsplit(crime$Long, "\\)"))
+options(digits=15)
+crime$Lat <- as.numeric(crime$Lat)
+crime$Long <- as.numeric(crime$Long)
+
+crime$Occurrence.Day <- as.character(crime$Occurrence.Day)
+crime$Occurrence.Hour <- as.character(crime$Occurrence.Hour)
+
+# Generate crime freq table grouped by year.
+#crime_year <- as.matrix(table(crime$Occurrence.Year, crime$Offense))
+#crime_year_df <- as.data.frame(cbind(rownames(crime_year), crime_year))
+#colnames(crime_year_df) <- c("Year", colnames(crime_year))
+#for (i in 1:ncol(crime_year_df)) {
+#        crime_year_df[ , i] <- as.numeric(as.character(crime_year_df[ , i]))
+#}
+#crime_year_df <- arrange(crime_year_df, Year)
+
+# Generate crime freq table grouped by month.
+
+crime_month <- as.matrix(table(crime$Occurrence.Month, crime$Offense))
+crime_month_df <- as.data.frame(cbind(rownames(crime_month), crime_month))
+colnames(crime_month_df) <- c("Month", colnames(crime_month))
+for (i in 2:ncol(crime_month_df)) {
+        crime_month_df[ , i] <- as.numeric(as.character(crime_month_df[ , i]))
+}
+crime_month_df$Month <- factor(crime_month_df$Month, levels = month.abb)
+crime_month_df <- arrange(crime_month_df, Month)
+
+# Generate crime freq table grouped by day of week.
+
+crime_day <- as.matrix(table(crime$Day.of.Week, crime$Offense))
+crime_day_df <- as.data.frame(cbind(rownames(crime_day), crime_day))
+colnames(crime_day_df) <- c("Day", colnames(crime_day))
+for (i in 2:ncol(crime_day_df)) {
+        crime_day_df[ , i] <- as.numeric(as.character(crime_day_df[ , i]))
+}
+crime_day_df$Day <- factor(crime_day_df$Day, levels = c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"))
+crime_day_df <- arrange(crime_day_df, Day)
+
+# Generate crime freq table grouped by day of month.
+
+crime_date <- as.matrix(table(crime$Occurrence.Day, crime$Offense))
+crime_date_df <- as.data.frame(cbind(rownames(crime_date), crime_date))
+colnames(crime_date_df) <- c("Date", colnames(crime_date))
+for (i in 1:ncol(crime_date_df)) {
+        crime_date_df[ , i] <- as.numeric(as.character(crime_date_df[ , i]))
+}
+crime_date_df <- arrange(crime_date_df, Date)
+
+# Generate crime freq table grouped by hour.
+
+crime_hour <- as.matrix(table(crime$Occurrence.Hour, crime$Offense))
+crime_hour_df <- as.data.frame(cbind(rownames(crime_hour), crime_hour))
+colnames(crime_hour_df) <- c("Hour", colnames(crime_hour))
+for (i in 1:ncol(crime_hour_df)) {
+        crime_hour_df[ , i] <- as.numeric(as.character(crime_hour_df[ , i]))
+}
+crime_hour_df <- arrange(crime_hour_df, Hour)
+crime_hour_df$Hour <- seq(0, 23, 1)
+
+# Generate crime freq table grouped by borough.
+
+crime_borough <- as.matrix(table(crime$Borough, crime$Offense))
+crime_borough_df <- as.data.frame(cbind(rownames(crime_borough), crime_borough))
+colnames(crime_borough_df) <- c("Borough", colnames(crime_borough))
+for (i in 2:ncol(crime_borough_df)) {
+        crime_borough_df[ , i] <- as.numeric(as.character(crime_borough_df[ , i]))
+}
+crime_borough_df$Borough <- c("Unknown","Bronx","Brooklyn","Manhattan","Queens","Staten Island")
+crime_borough_df$Borough <- factor(crime_borough_df$Borough, levels = c("Manhattan","Brooklyn","Queens","Bronx","Staten Island","Unknown"))
+crime_borough_df <- arrange(crime_borough_df, Borough)
+
+
+
+
+#crime$Day.of.Week <- factor(crime$Day.of.Week, levels = c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"))
+#crime <- arrange(crime, Day.of.Week)
+#histogram(~Day.of.Week | Offense, data=crime, main="Distribution of Heights by Voice Pitch", xlab="Height(inches)", xlim = seq(0,8,1))
+
+#barchart(BURGLARY ~ Borough, data = crime_borough_df)
+
+#qplot(crime_year_df$Year, crime_year_df$`GRAND LARCENY`, geom="line", group = 1)
+#lines(crime_month_df$`FELONY ASSAULT`)
+
+```
