@@ -1,0 +1,9 @@
+name: NYPD_accidents_shiny
+account: chenluji
+server: shinyapps.io
+appId: 84260
+bundleId: 376504
+url: https://chenluji.shinyapps.io/NYPD_accidents_shiny/
+when: 1455933015.71094
+asMultiple: FALSE
+asStatic: FALSE
