@@ -21,7 +21,7 @@ shinyServer(function(input, output, session) {
 
   # Select toilet type, multiple selections are allowed
   ttype <- reactive({
-    t <- cleantable
+    t <- toilet
     if (input$handicap == TRUE){
       t <- filter(t, Handicap == "Yes")
     }

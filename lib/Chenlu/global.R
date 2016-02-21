@@ -14,8 +14,8 @@ options(digits=15)
 pt$LAT <- as.numeric(pt$LAT)
 pt$LNG <- as.numeric(pt$LNG)
 # Import columns and change column names
-cleantable <- pt
-cleantable <- cleantable %>%
+toilet <- pt
+toilet <- toilet %>%
   select(
     Name = NAME,
     Yearround = OPEN_YEAR_ROUND,
@@ -27,28 +27,28 @@ cleantable <- cleantable %>%
     Long2 = LNG1)
 
 # Obtain observation numbers
-n <- dim(cleantable)[1]
-cleantable$Lat <- numeric(length = n)
-cleantable$Long <- numeric(length = n)
+n <- dim(toilet)[1]
+toilet$Lat <- numeric(length = n)
+toilet$Long <- numeric(length = n)
 # locate each toilet's latitude and longitude
 for (i in 1:n)
 {
-  if(cleantable$Indicator[i] == 1){
-    cleantable$Lat[i] <- cleantable$Lat1[i]
-    cleantable$Long[i] <- cleantable$Long1[i]
+  if(toilet$Indicator[i] == 1){
+    toilet$Lat[i] <- toilet$Lat1[i]
+    toilet$Long[i] <- toilet$Long1[i]
   }
-  if(cleantable$Indicator[i] == 2){
-    cleantable$Lat[i] <- cleantable$Lat2[i]
-    cleantable$Long[i] <- cleantable$Long2[i]
+  if(toilet$Indicator[i] == 2){
+    toilet$Lat[i] <- toilet$Lat2[i]
+    toilet$Long[i] <- toilet$Long2[i]
   }  
 }
 
 # Remove observations with NA in Lat or Long
-cleantable <- cleantable[complete.cases(cleantable[,9:10]),]
+toilet <- toilet[complete.cases(toilet[,c("Lat","Long")]),]
 
 # remove redundant columns
 drops <- c("Lat1","Long1","Lat2","Long2")
-cleantable <- cleantable[,!(names(cleantable) %in% drops)]
+toilet <- toilet[,!(names(toilet) %in% drops)]
 
 ##################################
 # Import crime data 
