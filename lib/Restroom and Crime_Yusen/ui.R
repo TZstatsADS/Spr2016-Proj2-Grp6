@@ -1,0 +1,104 @@
+library(shiny)
+library(leaflet)
+
+# Choices for drop-downs
+CrimeType <- c(
+        "All Crime" = "",
+        "Grand Larceny" = "GRAND LARCENY",
+        "Grand Larceny of Motor Vehicle" = "GRAND LARCENY OF MOTOR VEHICLE",
+        "Rape" = "RAPE",
+        "Murder" = "MURDER",
+        "Robbery" = "ROBBERY",
+        "Burglary" = "BURGLARY",
+        "Felony Assault" = "FELONY ASSAULT"
+)
+
+Month <- c(
+        "All" = "",
+        "January" = "Jan", "February" = "Feb", "March" = "Mar", 
+        "April" = "Apr", "May" = "May", "June" = "Jun",
+        "July" = "Jul", "August" = "Aug", "September" = "Sep",
+        "October" = "Oct", "November" = "Nov", "December" = "Dec"
+)
+
+DayofWeek <- c(
+        "All" = "",
+        "Monday", "Tuesday", "Wednesday", "Thursday", 
+        "Friday", "Saturday", "Sunday"
+)
+
+Hour <- c(
+        "All" = "",
+        "0",  "1" = "100",  "2" = "200",  "3" = "300",  "4" = "400",
+        "5" = "500", "6" = "600",  "7" = "700",  "8" = "800",  "9" = "900",
+        "10" = "1000", "11" = "1100", "12" = "1200", "13" = "1300",
+        "14" = "1400", "15" = "1500", "16" = "1600", "17" = "1700",
+        "18" = "1800", "19" = "1900", "20" = "2000", "21" = "2100",
+        "22" = '2200', "23" = "2300"
+)
+
+Day <- c(
+        "All" = "",
+        "1",  "2",  "3",  "4",  "5", "6",
+        "7",  "8",  "9",  "10", "11", "12",
+        "13", "14", "15", "16", "17", "18",
+        "19", "20", "21", "22", "23", "24",
+        "25", "26", "27", "28", "29", "30", "31"
+)
+
+Borough <- c(
+        "All boroughs" = "",
+        "Manhattan",
+        "Brooklyn",
+        "Queens",
+        "Bronx",
+        "Staten Island"
+        #"Unknown" = ""
+)
+
+
+
+shinyUI(navbarPage("NYPD 7 Major Felony Incidents Map", id="nav",
+                   
+                   tabPanel("Interactive map",
+                            div(class="outer",
+                                
+                                tags$head(
+                                        # Include our custom CSS
+                                        includeCSS("styles.css"),
+                                        includeScript("gomap.js")
+                                ),
+                                
+                                leafletOutput("map", width="100%", height="100%"),
+                                
+                                # Shiny versions prior to 0.11 should use class="modal" instead.
+                                absolutePanel(id = "controls", class = "panel panel-default", fixed = TRUE,
+                                              draggable = TRUE, top = 60, left = "auto", right = 20, bottom = "auto",
+                                              width = 330, height = "auto",
+                                              
+                                              h2("Crime Data"),
+                                              
+                                              selectInput("crime", "Crime Type", CrimeType),
+                                              #selectInput("size", "Size", CrimeType, selected = ""),
+                                              selectInput("month", "Month", Month),
+                                              selectInput("day", "Day", Day),
+                                              selectInput("hour", "Hour", Hour)
+                                              #submitButton("Update Graph")
+                                              #selectInput("borough", "Borough", Borough)
+                                              
+                                              #checkboxInput("cluster", "Add Cluster"),
+                                              #helpText("Cluster numbers show total accidents for each area", 
+                                              #         "(applies to all vehicles only)"),
+                                              #radioButtons("crime", "Crime Type", CrimeType, selected = "")
+                                ),
+                                
+                                tags$div(id="cite",
+                                         "Data from: ", tags$em("NYPD 7 Major Felony Incidents"), "  | NYC Open Data. 
+                                         Details of 7 Major Felony Incidents in New York City provided by the 
+                                         Police Department (NYPD)."
+                                )
+                                )
+                                ),
+                   conditionalPanel("false", icon("crosshair"))
+))
+                   
