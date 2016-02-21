@@ -49,7 +49,7 @@ Day <- c(
 
 shinyUI(navbarPage("NYC Public Toilets Map", id="nav",
                    
-                   tabPanel("Interactive map",
+                   tabPanel("Toilet Map",
                             div(class="outer",
                                 
                                 tags$head(
@@ -71,21 +71,17 @@ shinyUI(navbarPage("NYC Public Toilets Map", id="nav",
                                               checkboxInput("handicap", "Handicap Accessible"),
                                               checkboxInput("yearround", "Open Year Round"),
                                               helpText("Check to show crime data"),
-                                              checkboxInput("crime", "Add Crime Data"),
-                                              selectInput("crime", "Crime Type", CrimeType),
+                                              checkboxInput("addcrime", "Add Crime Data"),
+                                              selectInput("crime", "Crime Type", CrimeType, selected = "MURDER"),
                                               selectInput("month", "Month", Month),
                                               selectInput("day", "Day", Day),
                                               selectInput("hour", "Hour", Hour)
                                               #radioButtons("vehicle", "Show Just One Vehicle", vars3, selected = '')
-                                ),
-                                tags$div(id="cite",
-                                         "Data from: ", tags$em("NYPD 7 Major Felony Incidents"), "  | NYC Open Data. 
-                                         Details of 7 Major Felony Incidents in New York City provided by the 
-                                         Police Department (NYPD)."
-                                         
                                 )
                             )
+                            
+                            
+                            
                    ),
                    conditionalPanel("false", icon("crosshair"))
 ))
-
