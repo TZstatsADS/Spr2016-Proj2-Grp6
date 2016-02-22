@@ -1,8 +1,8 @@
 library(shiny)
 library(leaflet)
 library(RColorBrewer)
-library(scales)
-library(lattice)
+#library(scales)
+#library(lattice)
 library(dplyr)
 
 shinyServer(function(input, output, session) {
@@ -57,24 +57,33 @@ shinyServer(function(input, output, session) {
     return(draw)
   })
   
+  # Create toiletIcon
+  restroomIcon <- makeIcon(
+    iconUrl = "https://github.com/TZstatsADS/project2-group6/blob/master/doc/restroomIconr.png?raw=true",
+    #iconUrl = "https://github.com/TZstatsADS/project2-group6/blob/master/doc/restroomIcong.png?raw=true",
+    iconWidth = 30, iconHeight = 30,
+    iconAnchorX = 15, iconAnchorY = 15
+    #shadowUrl = "http://leafletjs.com/docs/images/leaf-shadow.png",
+    #shadowWidth = 50, shadowHeight = 64,
+    #shadowAnchorX = 4, shadowAnchorY = 62
+  )
+  
   # Add toilet and crime circles to map  
   observe({  
-    pal1 <- "red"
-    pal2 <- colorFactor(palette()[-1], levels(crime$Offense))
-    Radius1 <- 100
-    Radius2 <- 10
+    pal1 <- colorFactor(palette()[-1], levels(crime$Offense))
+    Radius1 <- 3
     if (input$addcrime == TRUE&length(as.matrix(cdata())) != 0){
         leafletProxy("map") %>%
           clearMarkers() %>%
-          addMarkers(data = ttype(), ~Long, ~Lat) %>%
-          addCircleMarkers(data = cdata(), ~Long, ~Lat, radius = Radius2, stroke = FALSE, fillOpacity = 0.7, fillColor = pal2(cdata()[["Offense"]])) %>%
-          addLegend("bottomleft", pal=pal2, values=cdata()[["Offense"]], title="crime",
+          addMarkers(data = ttype(), ~Long, ~Lat, icon = restroomIcon, options = markerOptions(opacity = 0.8), popup = ~Name) %>%
+          addCircleMarkers(data = cdata(), ~Long, ~Lat, radius = Radius1, stroke = FALSE, fillOpacity = 0.7, fillColor = pal1(cdata()[["Offense"]])) %>%
+          addLegend("bottomleft", pal=pal1, values=cdata()[["Offense"]], title="crime",
                     layerId="colorLegend")
     }
     else {
       leafletProxy("map") %>%
         clearMarkers() %>%
-        addMarkers(data = ttype(), ~Long, ~Lat, options = markerOptions(opacity = 0.7), popup = ttype()$Name) 
+        addMarkers(data = ttype(), ~Long, ~Lat, icon = restroomIcon, options = markerOptions(opacity = 0.8), popup = ~Name)
     }
   }) 
 })
