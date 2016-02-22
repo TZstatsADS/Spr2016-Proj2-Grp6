@@ -70,7 +70,6 @@ shinyUI(navbarPage("NYC Public Toilets Map", id="nav",
                                               selectInput("month", "Month", Month),
                                               selectInput("day", "Day", Day),
                                               selectInput("hour", "Hour", Hour)
-                                              #radioButtons("vehicle", "Show Just One Vehicle", vars3, selected = '')
                                 )
                             )
                             
@@ -82,9 +81,9 @@ shinyUI(navbarPage("NYC Public Toilets Map", id="nav",
                             div(class="outer",
                                 
                                 tags$head(
-                                        # Include our custom CSS
-                                        includeCSS("styles.css"),
-                                        includeScript("gomap.js")
+                                  # Include our custom CSS
+                                  includeCSS("styles.css"),
+                                  includeScript("gomap.js")
                                 ),
                                 
                                 leafletOutput("map2", width="100%", height="100%"),
@@ -106,5 +105,6 @@ shinyUI(navbarPage("NYC Public Toilets Map", id="nav",
                                 )
                             )
                    ),
+                   tabPanel("About our project", includeMarkdown("docs/About.md")),
                    conditionalPanel("false", icon("crosshair"))
 ))
