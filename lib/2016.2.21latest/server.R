@@ -60,13 +60,9 @@ shinyServer(function(input, output, session) {
   
   # Create toiletIcon
   restroomIcon <- makeIcon(
-    iconUrl = "https://github.com/TZstatsADS/project2-group6/blob/master/doc/restroomIconr.png?raw=true",
-    #iconUrl = "https://github.com/TZstatsADS/project2-group6/blob/master/doc/restroomIcong.png?raw=true",
+    iconUrl = "https://github.com/TZstatsADS/project2-group6/blob/master/doc/toiletIcon/toilet12.png?raw=true",
     iconWidth = 30, iconHeight = 30,
     iconAnchorX = 15, iconAnchorY = 15
-    #shadowUrl = "http://leafletjs.com/docs/images/leaf-shadow.png",
-    #shadowWidth = 50, shadowHeight = 64,
-    #shadowAnchorX = 4, shadowAnchorY = 62
   )
   
   # Add toilet and crime circles to map  
@@ -76,7 +72,7 @@ shinyServer(function(input, output, session) {
     if (input$addcrime == TRUE&length(as.matrix(cdata())) != 0){
         leafletProxy("map") %>%
           clearMarkers() %>%
-          addMarkers(data = ttype(), ~Long, ~Lat, icon = restroomIcon, options = markerOptions(opacity = 0.8), popup = ~Name) %>%
+          addMarkers(data = ttype(), ~Long, ~Lat, icon = restroomIcon, options = markerOptions(opacity = 0.9), popup = ~Name) %>%
           addCircleMarkers(data = cdata(), ~Long, ~Lat, radius = Radius1, stroke = FALSE, fillOpacity = 0.7, fillColor = pal1(cdata()[["Offense"]])) %>%
           addLegend("bottomleft", pal=pal1, values=cdata()[["Offense"]], title="crime",
                     layerId="colorLegend")
@@ -84,7 +80,7 @@ shinyServer(function(input, output, session) {
     else {
       leafletProxy("map") %>%
         clearMarkers() %>%
-        addMarkers(data = ttype(), ~Long, ~Lat, icon = restroomIcon, options = markerOptions(opacity = 0.8), popup = ~Name)
+        addMarkers(data = ttype(), ~Long, ~Lat, icon = restroomIcon, options = markerOptions(opacity = 0.9), popup = ~Name)
     }
   })
   
