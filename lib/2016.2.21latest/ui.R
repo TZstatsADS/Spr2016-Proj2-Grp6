@@ -98,9 +98,9 @@ shinyUI(navbarPage("NYC Public Toilets Map", id="nav",
                                               radioButtons("offense", "Show Just One Crime", CrimeType, selected = ''),
                                               
                                               # Simple integer interval
-                                              sliderInput("dhour", "Hour of Day:", 
-                                                          min = 0, max = 23, value = 0, step = 1,
-                                                          animate=TRUE),
+                                              sliderInput("minute", "Minute of Day:", 
+                                                          min = time.start, max = time.end, value = 0, step = 1,
+                                                          animate=animationOptions(interval = 500)),
                                               helpText("Click to see dynamic crime data")
                                 )
                             )

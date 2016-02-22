@@ -101,6 +101,7 @@ shinyServer(function(input, output, session) {
   
   # Filter crime data
   drawvalue <- reactive({
+<<<<<<< HEAD
     if (input$offense == ''){
       t <- filter(crime, hour == input$dhour)
       return(t)
@@ -119,6 +120,34 @@ shinyServer(function(input, output, session) {
       addCircles(~Long, ~Lat, radius=radius,
                  stroke=FALSE, fillOpacity=0.8,fillColor=pal(draw[["Offense"]])) %>%
       addLegend("bottomleft", pal=pal, values=levels(draw[["Offense"]]), layerId="colorLegend")
+=======
+          if (input$offense == ''){
+                  t <- filter(crime, minute == input$minute)
+                  return(t)
+          }
+          else{
+                  t <- filter(crime, Offense == input$offense, minute==input$minute)
+                  return(t)
+          }})
+  
+  observe({
+          draw <- drawvalue()
+          pal <- colorFactor(palette()[-1], levels(crime$Offense))
+          radius <-  50
+          if (length(as.matrix(draw)) != 0) {
+                  leafletProxy("map2", data = draw) %>%
+                          clearShapes() %>%
+                          addCircles(~Long, ~Lat, radius=radius,
+                                     stroke=FALSE, fillOpacity=0.8,fillColor=pal(draw[["Offense"]])) %>%
+                          addLegend("bottomleft", pal=pal, values=levels(draw[["Offense"]]), layerId="colorLegend")
+          }
+          else {
+                  leafletProxy("map2", data = draw) %>%
+                          clearShapes()
+          }
+          
+          
+>>>>>>> 1c95c60c267f3aa5f800aefb53983f06e491ddf0
   })
   
 })
