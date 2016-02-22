@@ -58,7 +58,7 @@ shinyServer(function(input, output, session) {
   
   # Create toiletIcon
   restroomIcon <- makeIcon(
-    iconUrl = "https://github.com/TZstatsADS/project2-group6/blob/master/doc/toiletIcon/toilet12.png?raw=true",
+    iconUrl = "https://github.com/TZstatsADS/project2-group6/blob/master/doc/toiletIcon/toilet18.png?raw=true",
     iconWidth = 25, iconHeight = 25,
     iconAnchorX = 13, iconAnchorY = 13
   )
@@ -82,6 +82,23 @@ shinyServer(function(input, output, session) {
                    popup = paste("*Name:", ttype()$Name, "<br>",
                                  "*Address:", ttype()$Address, "<br>"))
     }
+  })
+  
+  # Show a circle at the given location
+  show <- function(eventid, lat, lng) {
+    leafletProxy("map") %>% addCircles(lng=lng,lat=lat, radius=400, fillColor="red",layerId = eventid)
+  }
+  
+  # When map is clicked, show a circle 
+  observe({
+    leafletProxy("map") %>% clearShapes()
+    event <- input$map_marker_mouseover
+    if (is.null(event))
+      return()
+    
+    isolate({
+      show(event$id, event$lat, event$lng)
+    })
   })
   
   ## Dynamic Map ###########################################
