@@ -1,8 +1,6 @@
 library(shiny)
 library(leaflet)
 library(RColorBrewer)
-#library(scales)
-#library(lattice)
 library(dplyr)
 
 shinyServer(function(input, output, session) {
@@ -60,9 +58,13 @@ shinyServer(function(input, output, session) {
   
   # Create toiletIcon
   restroomIcon <- makeIcon(
-    iconUrl = "https://github.com/TZstatsADS/project2-group6/blob/master/doc/toiletIcon/toilet12.png?raw=true",
-    iconWidth = 25, iconHeight = 25,
-    iconAnchorX = 13, iconAnchorY = 13
+    iconUrl = "https://github.com/TZstatsADS/project2-group6/blob/master/doc/restroomIconr.png?raw=true",
+    #iconUrl = "https://github.com/TZstatsADS/project2-group6/blob/master/doc/restroomIcong.png?raw=true",
+    iconWidth = 30, iconHeight = 30,
+    iconAnchorX = 15, iconAnchorY = 15
+    #shadowUrl = "http://leafletjs.com/docs/images/leaf-shadow.png",
+    #shadowWidth = 50, shadowHeight = 64,
+    #shadowAnchorX = 4, shadowAnchorY = 62
   )
   
   # Add toilet and crime circles to map  
@@ -72,7 +74,7 @@ shinyServer(function(input, output, session) {
     if (input$addcrime == TRUE&length(as.matrix(cdata())) != 0){
       leafletProxy("map") %>%
         clearMarkers() %>%
-        addMarkers(data = ttype(), ~Long, ~Lat, icon = restroomIcon, options = markerOptions(opacity = 0.9), popup = ~Name) %>%
+        addMarkers(data = ttype(), ~Long, ~Lat, icon = restroomIcon, options = markerOptions(opacity = 0.8), popup = ~Name) %>%
         addCircleMarkers(data = cdata(), ~Long, ~Lat, radius = Radius1, stroke = FALSE, fillOpacity = 0.7, fillColor = pal1(cdata()[["Offense"]])) %>%
         addLegend("bottomleft", pal=pal1, values=cdata()[["Offense"]], title="crime",
                   layerId="colorLegend")
@@ -80,9 +82,7 @@ shinyServer(function(input, output, session) {
     else {
       leafletProxy("map") %>%
         clearMarkers() %>%
-        addMarkers(data = ttype(), ~Long, ~Lat, icon = restroomIcon, options = markerOptions(opacity = 0.9), 
-                   popup = paste("Name:", ttype()$Name, "<br>",
-                                 "Address:", ttype()$Address, "<br>"))
+        addMarkers(data = ttype(), ~Long, ~Lat, icon = restroomIcon, options = markerOptions(opacity = 0.8), popup = ~Name)
     }
   })
   
@@ -101,13 +101,12 @@ shinyServer(function(input, output, session) {
   
   # Filter crime data
   drawvalue <- reactive({
-<<<<<<< HEAD
     if (input$offense == ''){
-      t <- filter(crime, hour == input$dhour)
+      t <- filter(crime, minute == input$minute)
       return(t)
     }
     else{
-      t <- filter(crime, Offense == input$offense, hour==input$dhour)
+      t <- filter(crime, Offense == input$offense, minute==input$minute)
       return(t)
     }})
   
@@ -115,39 +114,19 @@ shinyServer(function(input, output, session) {
     draw <- drawvalue()
     pal <- colorFactor(palette()[-1], levels(crime$Offense))
     radius <-  50
-    leafletProxy("map2", data = draw) %>%
-      clearShapes() %>%
-      addCircles(~Long, ~Lat, radius=radius,
-                 stroke=FALSE, fillOpacity=0.8,fillColor=pal(draw[["Offense"]])) %>%
-      addLegend("bottomleft", pal=pal, values=levels(draw[["Offense"]]), layerId="colorLegend")
-=======
-          if (input$offense == ''){
-                  t <- filter(crime, minute == input$minute)
-                  return(t)
-          }
-          else{
-                  t <- filter(crime, Offense == input$offense, minute==input$minute)
-                  return(t)
-          }})
-  
-  observe({
-          draw <- drawvalue()
-          pal <- colorFactor(palette()[-1], levels(crime$Offense))
-          radius <-  50
-          if (length(as.matrix(draw)) != 0) {
-                  leafletProxy("map2", data = draw) %>%
-                          clearShapes() %>%
-                          addCircles(~Long, ~Lat, radius=radius,
-                                     stroke=FALSE, fillOpacity=0.8,fillColor=pal(draw[["Offense"]])) %>%
-                          addLegend("bottomleft", pal=pal, values=levels(draw[["Offense"]]), layerId="colorLegend")
-          }
-          else {
-                  leafletProxy("map2", data = draw) %>%
-                          clearShapes()
-          }
-          
-          
->>>>>>> 1c95c60c267f3aa5f800aefb53983f06e491ddf0
+    if (length(as.matrix(draw)) != 0) {
+      leafletProxy("map2", data = draw) %>%
+        clearShapes() %>%
+        addCircles(~Long, ~Lat, radius=radius,
+                   stroke=FALSE, fillOpacity=0.8,fillColor=pal(draw[["Offense"]])) %>%
+        addLegend("bottomleft", pal=pal, values=levels(draw[["Offense"]]), layerId="colorLegend")
+    }
+    else {
+      leafletProxy("map2", data = draw) %>%
+        clearShapes()
+    }
+    
+    
   })
   
 })
