@@ -95,7 +95,7 @@ shinyUI(navbarPage("NYC Public Toilets Map", id="nav",
                                               
                                               h2("NYPD 7 Major Felony Incidents"),
                                               
-                                              radioButtons("offense", "Show Just One Crime", CrimeType, selected = ''),
+                                              radioButtons("offense", "Show Just One Crime", CrimeType, selected = "FELONY ASSAULT"),
                                               
                                               # Simple integer interval
                                               sliderInput("minute", "Minute of Day:", 
