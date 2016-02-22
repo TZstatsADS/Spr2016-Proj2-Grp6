@@ -18,6 +18,7 @@ toilet <- pt
 toilet <- toilet %>%
   select(
     Name = NAME,
+    Address = ADDRESS,
     Yearround = OPEN_YEAR_ROUND,
     Handicap = HANDICAP_ACCESSIBLE,
     Indicator = indicator,
