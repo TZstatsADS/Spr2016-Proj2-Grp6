@@ -60,32 +60,30 @@ shinyServer(function(input, output, session) {
   })
     
   # Add toilet and crime circles to map  
- observe({  
-   pal1 <- "red"
-   pal2 <- "black"
-   pal <- colorFactor(palette()[-1], levels(crime$Offense))
-   Radius1 <- 100
-   Radius2 <- 10
-   if (input$addcrime == TRUE){
-           if (length(as.matrix(cdata())) == 0) {
-                   leafletProxy("map") %>%
-                           clearShapes() %>%
-                           addCircles(data = ttype(), ~Long, ~Lat, radius = Radius1, stroke = FALSE, fillOpacity = 0.8, fillColor = pal1)
-           }
-           else {
-                   leafletProxy("map") %>%
-                           clearShapes() %>%
-                           #showGroup('crime') %>%
-                           addCircles(data = ttype(), ~Long, ~Lat, radius = Radius1, stroke = FALSE, fillOpacity = 0.8, fillColor = pal1) %>%
-                           addCircles(data = cdata(), ~Long, ~Lat, radius = Radius2, stroke = FALSE, fillOpacity = 0.8, fillColor = pal(cdata()[["Offense"]])) %>%
-                           addLegend("bottomleft", pal=pal, values=cdata()[["Offense"]], title="crime",
-                                     layerId="colorLegend")
-           }
-   }
-   else {
-     leafletProxy("map") %>%
-       clearShapes() %>%
-       addCircles(data = ttype(), ~Long, ~Lat, radius = Radius1, stroke = FALSE, fillOpacity = 0.8, fillColor = pal1) 
-   }
-    }) 
-})
+  
+  observe({  
+    pal1 <- "red"
+    pal2 <- colorFactor(palette()[-1], levels(crime$Offense))
+    Radius1 <- 100
+    Radius2 <- 30
+    if (input$addcrime == TRUE&length(as.matrix(cdata())) != 0){
+      leafletProxy("map") %>%
+        #showGroup('crime') %>%
+        addCircles(data = ttype(), ~Long, ~Lat, radius = Radius1, stroke = FALSE, fillOpacity = 0.8, fillColor = pal1) %>%
+        addCircles(data = cdata(), ~Long, ~Lat, radius = Radius2, stroke = FALSE, fillOpacity = 0.8, fillColor = pal2(cdata()[["Offense"]])) %>%
+        addLegend("bottomleft", pal=pal2, values=cdata()[["Offense"]], title="crime",
+                  layerId="colorLegend")
+    }
+    else {
+      leafletProxy("map") %>%
+      clearShapes() %>%
+      addCircles(data = ttype(), ~Long, ~Lat, radius = Radius1, stroke = FALSE, fillOpacity = 0.8, fillColor = pal1) 
+    }
+  })
+  
+  
+  })
+
+
+
+ 
