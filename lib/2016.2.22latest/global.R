@@ -1,7 +1,7 @@
-
 library(dplyr)
 library(stringr)
-
+library(RCurl)
+library(RJSONIO)
 # Data cleaning to get rid of records with no geo info
 # Original data NYPD_Motor_Vehicle_Collisions.csv is 119.5 MB, which is too large to be included in this repo
 
