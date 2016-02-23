@@ -1,10 +1,7 @@
-setwd('/Users/ruixiongshi/Documents/')
-pubtoilet<-readRDS("pubtoilet.RDS")
-
 library(RCurl)
 library(RJSONIO)
 library(plyr)
-
+################# function of loacate me#######################
 url <- function(address, return.call = "json", sensor = "false") {
   root <- "http://maps.google.com/maps/api/geocode/"
   u <- paste(root, return.call, "?address=", address, "&sensor=", sensor, sep = "")
@@ -28,30 +25,35 @@ geoCode <- function(address,verbose=FALSE) {
   }
 }
 
-for(i in 291:length(pubtoilet$NAME)){
-  
-  # Every nine records, pause 3 seconds
-  if(i %% 9 == 0) Sys.sleep(1.5)
-  
-  address<-geoCode(pubtoilet$NAME[i])
-  address1<-geoCode(pubtoilet$ADDRESS[i])
+url("250W 100th street,New York,NY,10025")
+############### End ############################################
 
-  pubtoilet$add[i]<-address[4]
-  pubtoilet$add1[i]<-address1[4]
-  
+###############function for the route###########################
+
+url2 <- function(ori_lat,ori_lng,des_lat,des_lng,return.call = "json", sensor = "false") {
+  root <- "http://maps.google.com/maps/api/directions/"
+  u <- paste(root, return.call, "?origin=", ori_lat,"+",ori_lng,"&destination=",des_lat,"+",des_lng,"&sensor=", sensor, sep = "")
+  return(URLencode(u))
 }
 
-as.double(pubtoilet$LAT[1])
+geoRoute <- function(ori_lat,ori_lng,des_lat,des_lng) {
+  #if(verbose) cat(address,"\n")
+  u <- url2(ori_lat,ori_lng,des_lat,des_lng)
+  doc <- getURL(u)
+  x <- fromJSON(doc,simplify = FALSE)
+  if(x$status=="OK") {
+    route <- toJSON(x$routes)
+    return(route)
+    Sys.sleep(0.5)
+  } else {
+    return(NA)
+  }
+}
 
-pubtoilet$pro<-abs(as.numeric(pubtoilet$LAT)-as.numeric(pubtoilet$LAT1)) * abs(as.numeric(pubtoilet$LNG)-as.numeric(pubtoilet$LNG1))
-address <- geoCode("E 72nd St, New York, NY 10021, United States")
-pubtoilet$LAT[1]<-address[1]
-pubtoilet$LNG[1]<-address[2]
 
-write.csv(pubtoilet, "publictoilet.csv")
-library(data.table)
-pubtoilet<-fread("publictoilet.csv")
-df <- tbl_df(pubtoilet)
-df$NAME<-as.factor(df$NAME)
-summary(df$NAME)
-write.csv(pubtoilet, "pubtoilet1.csv")
+origin_lat=40.7902926
+origin_lng=-73.9544024
+destination_lat=40.7937661
+destination_lng=-73.9524574
+route<-geoRoute(origin_lat,origin_lng,destination_lat,destination_lng)
+
