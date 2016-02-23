@@ -2,6 +2,8 @@ library(RCurl)
 library(RJSONIO)
 library(dplyr)
 library(stringr)
+library(ggmap)
+library(taRifx.geo)
 
 
 
