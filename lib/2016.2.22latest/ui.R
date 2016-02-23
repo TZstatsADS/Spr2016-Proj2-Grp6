@@ -41,7 +41,7 @@ Day <- c(
   "25", "26", "27", "28", "29", "30", "31"
 )
 
-shinyUI(navbarPage("NYC Public Toilets Map", id="nav",
+shinyUI(navbarPage("DIDI Toilets", id="nav",
                    
                    tabPanel("Toilet Map",
                             div(class="outer",
