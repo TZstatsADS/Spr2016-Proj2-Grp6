@@ -1,0 +1,9 @@
+name: NYC_Toilet_Map
+account: chenluji
+server: shinyapps.io
+appId: 84650
+bundleId: 377359
+url: https://chenluji.shinyapps.io/NYC_Toilet_Map/
+when: 1456123647.87743
+asMultiple: FALSE
+asStatic: FALSE
