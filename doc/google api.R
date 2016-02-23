@@ -57,3 +57,21 @@ destination_lat=40.7937661
 destination_lng=-73.9524574
 route<-geoRoute(origin_lat,origin_lng,destination_lat,destination_lng)
 
+#########################
+
+filter_crime<-function(lat,lng,radius){
+  latlimit<-0.003619/400*radius
+  lnglimit<-0.000316/400*radius
+  latrange_upper<-lat+latlimit
+  latrange_lower<-lat-latlimit
+  lngrange_upper<-lng+lnglimit
+  lngrange_lower<-lng-lnglimit
+  crime_sub<-filter(crime, Lat>latrange_lower,Lat<latrange_upper,
+                    Long>lngrange_lower,Long<lngrange_upper)
+  return(crime_sub)[1])
+}
+
+lat=40.748730
+lng=-73.988315
+
+filter_crime(lat,lng)
