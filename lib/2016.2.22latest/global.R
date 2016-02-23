@@ -1,8 +1,14 @@
-
-library(dplyr)
-library(stringr)
 library(RCurl)
 library(RJSONIO)
+library(dplyr)
+library(stringr)
+<<<<<<< HEAD
+library(RCurl)
+library(RJSONIO)
+=======
+library(ggmap)
+library(taRifx.geo)
+>>>>>>> origin/master
 
 # Data cleaning to get rid of records with no geo info
 # Original data NYPD_Motor_Vehicle_Collisions.csv is 119.5 MB, which is too large to be included in this repo
