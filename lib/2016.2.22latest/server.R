@@ -107,43 +107,28 @@ shinyServer(function(input, output, session) {
   
   show <- reactive({
     function(eventid, lat, lng) {
-    leafletProxy("map") %>% addCircles(lng=lng,lat=lat, radius=input$circleR, fillColor="red",layerId = eventid)
+    leafletProxy("map") %>% addCircles(lng=lng,lat=lat, radius=input$circleR, fillColor="red",layerId = eventid, group="overlays")
     } %>%
       return()
   })
   
   # When map is clicked, show a circle
   observe({
-    leafletProxy("map") %>% clearShapes() # %>%
+    leafletProxy("map") %>% clearGroup("overlays") # %>%
     # leafletProxy("map") %>%
     # addPolylines(lng=c(a$lon,a$lon1),lat=c(a$lat,a$lat1),color="red")
       # addPolylines(lng=a$lon,lat=a$lat,color="red")
-    event <- input$map_marker_click
+    event <- input$map_marker_mouseover
     if (is.null(event))
       return()
-    filtered_crime <- filter_crime(event$lat,event$lng,input$circleR)
-    output$totalcrime <- renderText({
-      if (nrow(filtered_crime) == 0) {
-        return(NULL)
-      }
-      paste("Total Number of Crimes:",nrow(filtered_crime))
-    })
     
-    output$circ_plot <- renderPlot({
-      if (nrow(filtered_crime) == 0) {
-        return(NULL)
-      }
-      
-      levels(filtered_crime$Offense)[levels(filtered_crime$Offense) ==  "GRAND LARCENY OF MOTOR VEHICLE"] <- "GTA"
-      ggplot(filtered_crime,aes(x=factor(1),fill=as.factor(Offense))) + geom_bar() + coord_polar(theta='y') + ylab("") + xlab("") +
-        theme(panel.background= element_blank(),plot.background= element_blank())
 #         opts(
 #           panel.background = theme_rect(fill = "transparent",colour = NA), # or theme_blank()
 #           panel.grid.minor = theme_blank(), 
 #           panel.grid.major = theme_blank(),
 #           plot.background = theme_rect(fill = "transparent",colour = NA)
 #         )
-    })#,bg="transparent")
+    # })#,bg="transparent")
     isolate({
       show()(event$id, event$lat, event$lng)
     })
@@ -166,11 +151,30 @@ shinyServer(function(input, output, session) {
       event <- input$map_marker_click
       if (is.null(event))
         return()
+      
+      filtered_crime <- filter_crime(event$lat,event$lng,input$circleR)
+      output$totalcrime <- renderText({
+        if (nrow(filtered_crime) == 0) {
+          return(NULL)
+        }
+        paste("Total Number of Crimes:",nrow(filtered_crime))
+      })
+      
+      output$circ_plot <- renderPlot({
+        if (nrow(filtered_crime) == 0) {
+          return(NULL)
+        }
+        
+        levels(filtered_crime$Offense)[levels(filtered_crime$Offense) ==  "GRAND LARCENY OF MOTOR VEHICLE"] <- "GTA"
+        ggplot(filtered_crime,aes(x=factor(1),fill=as.factor(Offense))) + geom_bar() + coord_polar(theta='y') + ylab("") + xlab("") +
+          theme(panel.background= element_blank(),plot.background= element_blank())
+      })
+      
       rlat <- event$lat
       rlon <- event$lng
       poly <- geoRoute(xlat,xlon,rlat,rlon)
       llatlon <- decodeLine(poly)
-      print(llatlon)
+      # print(llatlon)
       leafletProxy("map") %>% clearShapes() %>%
         addPolylines(lng=llatlon$lon,lat=llatlon$lat,color="red") #%>%
         # addMarkers(lng=xlon,lat=xlat)
