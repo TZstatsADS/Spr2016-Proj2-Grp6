@@ -8,6 +8,134 @@ library(dplyr)
 
 # Import toilet data (pt is short for public toilet)
 
+decodeLine <- function(encoded){
+  require(bitops)
+  
+  vlen <- nchar(encoded)
+  vindex <- 0
+  varray <- NULL
+  vlat <- 0
+  vlng <- 0
+  
+  while(vindex < vlen){
+    vb <- NULL
+    vshift <- 0
+    vresult <- 0
+    repeat{
+      if(vindex + 1 <= vlen){
+        vindex <- vindex + 1
+        vb <- as.integer(charToRaw(substr(encoded, vindex, vindex))) - 63  
+      }
+      
+      vresult <- bitOr(vresult, bitShiftL(bitAnd(vb, 31), vshift))
+      vshift <- vshift + 5
+      # print(vb)
+      if(vb < 32) break
+    }
+    
+    dlat <- ifelse(
+      bitAnd(vresult, 1)
+      , -(bitShiftR(vresult, 1)+1)
+      , bitShiftR(vresult, 1)
+    )
+    vlat <- vlat + dlat
+    
+    vshift <- 0
+    vresult <- 0
+    repeat{
+      if(vindex + 1 <= vlen) {
+        vindex <- vindex+1
+        vb <- as.integer(charToRaw(substr(encoded, vindex, vindex))) - 63        
+      }
+      
+      vresult <- bitOr(vresult, bitShiftL(bitAnd(vb, 31), vshift))
+      vshift <- vshift + 5
+      if(vb < 32) break
+    }
+    
+    dlng <- ifelse(
+      bitAnd(vresult, 1)
+      , -(bitShiftR(vresult, 1)+1)
+      , bitShiftR(vresult, 1)
+    )
+    vlng <- vlng + dlng
+    
+    varray <- rbind(varray, c(vlat * 1e-5, vlng * 1e-5))
+  }
+  coords <- data.frame(varray)
+  names(coords) <- c("lat", "lon")
+  coords
+}
+
+filter_crime<-function(lat,lng,radius){
+  latlimit<-0.003619/400*radius
+  lnglimit<-0.000316/400*radius
+  latrange_upper<-lat+latlimit
+  latrange_lower<-lat-latlimit
+  lngrange_upper<-lng+lnglimit
+  lngrange_lower<-lng-lnglimit
+  crime_sub<-filter(crime, Lat>latrange_lower,Lat<latrange_upper,
+                    Long>lngrange_lower,Long<lngrange_upper)
+  return(crime_sub)
+}
+# lat=40.748730
+# lng=-73.988315
+# filter_crime(lat,lng)
+
+
+
+url <- function(address, return.call = "json", sensor = "false") {
+  root <- "http://maps.google.com/maps/api/geocode/"
+  u <- paste(root, return.call, "?address=", address, "&sensor=", sensor, sep = "")
+  return(URLencode(u))
+}
+
+
+geoCode <- function(address,verbose=FALSE) {
+  if(verbose) cat(address,"\n")
+  u <- url(address)
+  doc <- getURL(u)
+  x <- fromJSON(doc,simplify = FALSE)
+  if(x$status=="OK") {
+    lat <- x$results[[1]]$geometry$location$lat
+    lng <- x$results[[1]]$geometry$location$lng
+    location_type  <- x$results[[1]]$geometry$location_type
+    formatted_address  <- x$results[[1]]$formatted_address
+    return(c(lat, lng, location_type, formatted_address))
+    Sys.sleep(0.5)
+  } else {
+    return(c(NA,NA,NA, NA))
+  }
+}
+
+
+url2 <- function(ori_lat,ori_lng,des_lat,des_lng,return.call = "json", sensor = "false") {
+  root <- "http://maps.google.com/maps/api/directions/"
+  u <- paste(root, return.call, "?origin=", ori_lat,"+",ori_lng,"&destination=",des_lat,"+",des_lng,"&sensor=", sensor, sep = "")
+  return(URLencode(u))
+}
+
+geoRoute <- function(ori_lat,ori_lng,des_lat,des_lng) {
+  #if(verbose) cat(address,"\n")
+  u <- url2(ori_lat,ori_lng,des_lat,des_lng)
+  doc <- getURL(u)
+  x <- fromJSON(doc,simplify = FALSE)
+  if(x$status=="OK") {
+    route <- x$route[[1]]$overview_polyline$points
+    return(route)
+    Sys.sleep(0.5)
+  } else {
+    return(NA)
+  }
+}
+
+
+
+
+
+
+
+
 pt <- read.csv("data/publictoilet.csv")
 pt$LAT <- as.character(pt$LAT)
 pt$LNG <- as.character(pt$LNG)

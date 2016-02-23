@@ -2,6 +2,7 @@ library(shiny)
 library(leaflet)
 library(RColorBrewer)
 library(dplyr)
+library(ggplot2)
 
 shinyServer(function(input, output, session) {
   
@@ -67,6 +68,12 @@ shinyServer(function(input, output, session) {
       return()
   }) 
   
+  a <- as.data.frame(decodeLine("qy}wF`dkbM`EpCdCaIgAs@qHaF{FuDyFuDgC~H^V"))
+#   a$lat1 = c(a$lat[-1],0)
+#   a$lon1 = c(a$lon[-1],0)
+#   a <- a[1:8,]
+#   print(a)
+  
   # Add toilet and crime circles to map  
   observe({  
     pal1 <- colorFactor(palette()[-1], levels(crime$Offense))
@@ -74,17 +81,22 @@ shinyServer(function(input, output, session) {
     if (input$addcrime == TRUE&length(as.matrix(cdata())) != 0){
       leafletProxy("map") %>%
         clearMarkers() %>%
+        # addPolylines(lng=c(a$lon,a$lon1),lat=c(a$lat,a$lat1),color="red") %>%
         addMarkers(data = ttype(), ~Long, ~Lat, icon = restroomIcon(), options = markerOptions(opacity = 0.9), popup = ~Name) %>%
         addCircleMarkers(data = cdata(), ~Long, ~Lat, radius = Radius1, stroke = FALSE, fillOpacity = 0.7, fillColor = pal1(cdata()[["Offense"]])) %>%
         addLegend("bottomleft", pal=pal1, values=cdata()[["Offense"]], title="crime",
                   layerId="colorLegend")
     }
     else {
+#       print("hello")
+#       print(a$lat)
+#       print(a$lon)
       leafletProxy("map") %>%
         clearMarkers() %>%
-        addMarkers(data = ttype(), ~Long, ~Lat, icon = restroomIcon(), options = markerOptions(opacity = 0.9), 
+        # addPolylines(lng=c(a$lon,a$lon1),lat=c(a$lat,a$lat1),color="red") %>%
+                addMarkers(data = ttype(), ~Long, ~Lat, icon = restroomIcon(), options = markerOptions(opacity = 0.9), 
                    popup = paste("*Name:", ttype()$Name, "<br>",
-                                 "*Address:", ttype()$Address, "<br>"))
+                                 "*Address:", ttype()$Address, "<br>")) #%>%
     }
   })
   
@@ -102,15 +114,73 @@ shinyServer(function(input, output, session) {
   
   # When map is clicked, show a circle
   observe({
-    leafletProxy("map") %>% clearShapes()
-    event <- input$map_marker_mouseover
+    leafletProxy("map") %>% clearShapes() # %>%
+    # leafletProxy("map") %>%
+    # addPolylines(lng=c(a$lon,a$lon1),lat=c(a$lat,a$lat1),color="red")
+      # addPolylines(lng=a$lon,lat=a$lat,color="red")
+    event <- input$map_marker_click
     if (is.null(event))
       return()
+    filtered_crime <- filter_crime(event$lat,event$lng,input$circleR)
+    output$totalcrime <- renderText({
+      if (nrow(filtered_crime) == 0) {
+        return(NULL)
+      }
+      paste("Total Number of Crimes:",nrow(filtered_crime))
+    })
     
+    output$circ_plot <- renderPlot({
+      if (nrow(filtered_crime) == 0) {
+        return(NULL)
+      }
+      
+      levels(filtered_crime$Offense)[levels(filtered_crime$Offense) ==  "GRAND LARCENY OF MOTOR VEHICLE"] <- "GTA"
+      ggplot(filtered_crime,aes(x=factor(1),fill=as.factor(Offense))) + geom_bar() + coord_polar(theta='y') + ylab("") + xlab("") +
+        theme(panel.background= element_blank(),plot.background= element_blank())
+#         opts(
+#           panel.background = theme_rect(fill = "transparent",colour = NA), # or theme_blank()
+#           panel.grid.minor = theme_blank(), 
+#           panel.grid.major = theme_blank(),
+#           plot.background = theme_rect(fill = "transparent",colour = NA)
+#         )
+    })#,bg="transparent")
     isolate({
       show()(event$id, event$lat, event$lng)
     })
   })
+  
+  observe({
+    print(input$submit[1])
+    if(input$submit[1] > 0) {
+      # add <- isolate(input$address)
+      
+      xlatlon<-geoCode(input$address)
+      xlat <- as.numeric(xlatlon[1])
+      xlon <- as.numeric(xlatlon[2])
+      leafletProxy("map") %>% 
+        addMarkers(lng=xlon,lat=xlat)
+      #       print(rlat)
+#       print(rlon)
+#       print(xlat)
+#       print(xlon)
+      event <- input$map_marker_click
+      if (is.null(event))
+        return()
+      rlat <- event$lat
+      rlon <- event$lng
+      poly <- geoRoute(xlat,xlon,rlat,rlon)
+      llatlon <- decodeLine(poly)
+      print(llatlon)
+      leafletProxy("map") %>% clearShapes() %>%
+        addPolylines(lng=llatlon$lon,lat=llatlon$lat,color="red") #%>%
+        # addMarkers(lng=xlon,lat=xlat)
+    }
+  })
+  
+  # breaks <- hist(plot=FALSE, )
+  
+  
+  
   
   ## Dynamic Map ###########################################
   
