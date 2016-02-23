@@ -150,7 +150,7 @@ shinyServer(function(input, output, session) {
   })
   
   observe({
-    print(input$submit[1])
+    #print(input$submit[1])
     if(input$submit[1] > 0) {
       # add <- isolate(input$address)
       
