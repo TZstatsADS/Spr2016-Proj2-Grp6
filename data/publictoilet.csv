@@ -61,10 +61,10 @@
 60,1,Bloomingdales Soho,504 Broadway (bet. Broome and Spring),Yes,No,40.722384,-73.999144,NA,NA
 61,1,Macys Department Store,151 West 34th St.,Yes,No,40.750962,-73.989526,NA,NA
 62,1,Port Authority Bus Terminal,8th Ave & 42nd street,Yes,Yes,40.757414,-73.989772,NA,NA
-63,2,Herald Square Park,Broadway & 35th Street,Yes,Yes,39.975322,-85.992374,41.1115472,-73.8583806
+63,2,Herald Square Park,Broadway & 35th Street,Yes,Yes,,-85.992374,40.750293,-73.987646
 64,1,Greeley Square Park,Broadway & 32nd Street,Yes,Yes,40.7486977,-73.9883319,41.1115472,-73.8583806
 65,1,Lincoln Center for Performing Arts,138 W. 65th St.,Yes,No,40.773844,-73.983616,41.7764299,-87.626745
-66,1,PROSPECT PARK playground,EASTERN PKWY BETWEEN WASHINGTON AVE & FLATBUSH AVE,Yes,Yes,41.516443,-78.2136126,NA,NA
+66,1,PROSPECT PARK playground,EASTERN PKWY BETWEEN WASHINGTON AVE & FLATBUSH AVE,Yes,Yes,40.660869,-73.965199,NA,NA
 67,2,Brooklyn Public Library central branch,Grand Army Plaza,Yes,Yes,40.6781784,-73.9441579,40.6730861,-73.9694272
 68,1,Underhill Playground,Underhill Ave at Prospect Place,Yes,No,40.676715,-73.965699,NA,NA
 69,1,Saks Fifth Avenue,"611 Fifth Avenue (between E. 49th and 50th st.), New York, NY 10022",Yes,Yes,40.758096,-73.976969,NA,NA
@@ -139,7 +139,7 @@
 138,1,Mullaly Park (Skate Building),"East 164 Street, Jerome Avenue, Macombs Dam Bridge, East 162 Street, River Avenue",Yes,Not Available,40.831783,-73.92406,NA,NA
 139,1,Nelson Playground,"West 166 Street, Nelson Avenue, Woodycrest Avenue",Yes,Not Available,40.8348988,-73.9269807,NA,NA
 140,1,Noble Playground,"Nobel Avenue, Bronx River Avenue, Bronx River Parkway, Cross Bronz Expressway",Yes,Not Available,40.8372519,-73.8722287,NA,NA
-141,1,Orchard Beach Pavilion,"Bruckner Boulevard, Eastchester Bay, Hutchinson",Yes,Not Available,42.976524,-77.976095,40.8524136,-73.8263227
+141,1,Orchard Beach Pavilion,"Bruckner Boulevard, Eastchester Bay, Hutchinson",Yes,Not Available,40.8614,-73.797174,40.8524136,-73.8263227
 142,1,Owen Dolen Recreation Center,"Westchester Avenue, Lane Avenue, East Tremont Avenue",Yes,No,40.840698,-73.842504,41.0144987,-73.7118056
 143,1,P.O. Serrano Playground,"Turnbull Avenue, Olmstead Avenue, Lafayette Avenue",Yes,Not Available,40.823453,-73.850965,NA,NA
 144,1,Parkside Playground,"Arnow Avenue, Adee Avenue, Olinville Avenue",Yes,Not Available,40.866094,-73.868732,NA,NA
@@ -180,7 +180,7 @@
 179,1,Zimmerman Playground,"Britton Street, Barker Avenue, Olinville Avenue",Yes,Not Available,40.866113,-73.868598,NA,NA
 180,1,Abe Lincoln Playground,"East 135 Street, between Madison & 5 avenues",Yes,Not Available,40.8123146,-73.937268,43.0730517,-89.4012302
 181,1,Alexander Hamilton Playground,"Hamilton Place, West 140 to West 141 Streets",Yes,Not Available,40.8230268,-73.9513202,41.2795964,-82.2451306
-182,1,Alfred E. Smith Park,"Catherine Slip, Madison & South Streets",Yes,Not Available,42.653986,-73.75993,43.0730517,-89.4012302
+182,1,Alfred E. Smith Park,"Catherine Slip, Madison & South Streets",Yes,Not Available,40.819429,-73.920681,43.0730517,-89.4012302
 183,1,Alice Kornegay Triangle,"Lexington Avenue, East 128 & East 129 Streets",Yes,No,40.806552,-73.935558,40.92844,-81.1153853
 184,2,Annunciation Park,"Convent and Amsterdam Avenue, W 135 Street",Yes,Not Available,38.5152427,-90.309449,40.8184009,-73.9508602
 185,1,Asser Levy Playground,Asser Levy Place & East 24-25 streets,Yes,No,40.736139,-73.975635,NA,NA
@@ -216,7 +216,7 @@
 215,1,Hansborough Recreation Center,35 West 134 Street,Yes,No,40.812788,-73.939211,35.3343358,-97.5128357
 216,1,Happy Warrior Playground,West 98 Street & Amsterdam Aveue,Yes,No,40.79694,-73.967784,44.8263946,-93.3188017
 217,1,Highbridge Park (Quisqueya Playground),West 180 Street & Amsterdam Avenue,Yes,Yes,40.843436,-73.933201,40.4554989,-94.1199107
-218,1,Highbridge Park (Recreation Center),"West 155 & Dyckman streets, Edgecombe & Amsterdam avenues",Yes,Not Available,40.6419877,-74.9132045,NA,NA
+218,1,Highbridge Park (Recreation Center),"West 155 & Dyckman streets, Edgecombe & Amsterdam avenues",Yes,Not Available,40.842771,-73.934133,NA,NA
 219,1,Highbridge Park (Wallenberg Playground),West 188 Street & Amsterdam Avenue,Yes,Yes,40.852714,-73.926915,NA,NA
 220,1,Holcombe Rucker,"West 155 St, 8 Ave to Harlem River Drive",Yes,No,40.832725,-73.939137,40.8280552,-73.9346918
 221,1,Howard Bennett Playground,"West 135 to West 136 streets, Lenox to 5 avenues",Yes,Not Available,40.8136794,-73.9387312,NA,NA
@@ -401,12 +401,12 @@
 400,1,Vleigh Playground,70 Rd to 71 Ave,Yes,Yes,40.7298704,-73.8159908,23.0599167,113.1020109
 401,1,Whitestone Playground,12 Ave & 153 St,Yes,Yes,"40.792010, ",-73.808606,NA,NA
 402,1,Greencroft Playground,Redgrave ave & Ainsworth ave & Durant ave,Yes,No,40.551685,-74.136334,NA,NA
-403,2,Joline Pool Playground,Joline Ave & Hylan Blvd,Yes,Yes,NA,NA,40.3087869,-73.9960543
+403,2,Joline Pool Playground,Joline Ave & Hylan Blvd,Yes,Yes,NA,NA,40.505721,-74.235713
 404,1,Levy Playground,Jewett ave & Castleton ave,Yes,No,40.633905,-74.1290426,41.9031595,-100.2688943
 405,1,Lyons Pool,Pier 6 & Victory Blvd,Yes,Yes,40.637691,-74.074403,57.4390903,10.5516386
 406,1,Mahoney Playground,Beechwood ave & Cleveland ave,Yes,No,40.6434007,-74.0860043,40.850432,-81.1339976
 407,1,Markham Playground,Willowbrook Pkwy & Forest ave & Houston St,Yes,Yes,40.6233382,-74.1458331,39.8422889,-86.1191996
-408,2,McDonald Playground,Forest Ave & Myrtle Ave between Broadway & Burgher,Yes,Not Available,42.3674971,-71.2309007,43.6815232,-70.2898967
+408,2,McDonald Playground,Forest Ave & Myrtle Ave between Broadway & Burgher,Yes,Not Available,40.629518,-74.115092,43.6815232,-70.2898967
 409,1,Midland Field,Midland Ave & Mason Ave,Yes,Yes,40.5762928,-74.098669,30.1800183,-92.5370785
 410,1,Midland Playground,Lincoln ave & Mason ave,Yes,No,40.5752343,-74.0988526,42.7765149,-94.227158
 411,1,Old Town Playground,Parkinson Ave & Kramer St,Yes,No,40.5954163,-74.081599,40.5966253,-74.0828032
@@ -521,7 +521,7 @@
 520,1,Flushing Meadows Corona Park (Meadow Lake North),Long Island Expressway to Meadow Lake to Van Wyck Expressway Extension to Grand Central Parkway,Yes,Not Available,40.7359996,-73.840436,NA,NA
 521,1,Flushing Meadows Corona Park (Playground for All Children),111 Street and Corona Avenue,Yes,Yes,40.7408291,-73.8499488,40.7406704,-73.8501755
 522,1,Flushing Meadows Corona Park (Worlds Fair Playground),"Grand Central Parkway, Van Wyck Expressway",Yes,Not Available,40.7375349,-73.8457658,NA,NA
-523,1,Flynn Playground,"3 Avenue, East 158 Street, Brook Avenue, East 157 Street",Yes,Not Available,42.2463216,-70.9972162,NA,NA
+523,1,Flynn Playground,"3 Avenue, East 158 Street, Brook Avenue, East 157 Street",Yes,Not Available,40.820978,-73.911863,NA,NA
 524,1,Forest Park (Jackson Pond Playground),108 Street and Park Lane South,Yes,Not Available,40.7007278,-73.8431928,44.483595,-73.2190679
 525,1,Forest Park (Seuffert Bandshell),West Main Drive to eastern side of golf course,No,Not Available,40.698519,-73.85805,NA,NA
 526,2,"Forest Park (Sobelsohn Playground, The Overlook)",Park Lane South and Abingdon Road,Yes,Not Available,NA,NA,40.7096359,-73.834812
@@ -545,7 +545,7 @@
 544,1,Gravesend Park,18 Avenue & 56 Street,Yes,Not Available,40.6234499,-73.9842885,47.9330656,-97.3115371
 545,1,Greene Playground,Greene & Washington avenues,Yes,Not Available,40.6864082,-73.9659225,39.697399,-83.8897057
 546,1,Greenwood Playground,"Fort Hamilton Parkway, Greenwood, East 5 Street",Yes,Not Available,40.6502804,-73.9764294,40.6094454,-74.0285434
-547,1,Grover Cleveland Park,"Rene Court, Grandview Avenue, Stanjope Street & Fairview Avenue",Yes,Not Available,40.834281,-74.282995,NA,NA
+547,1,Grover Cleveland Park,"Rene Court, Grandview Avenue, Stanjope Street & Fairview Avenue",Yes,Not Available,40.834321,-74.283167,NA,NA
 548,1,Gunn Park (PS 18),"Hillside Avenue, east of 235 Court",No,Not Available,40.732456,-73.731724,NA,NA
 549,1,Haggerty Park,202 Street & Jamaica Avenue,No,Yes,40.721486,-73.757948,44.4745123,-103.3163374
 550,1,Harry Maze Memorial Park,Avenue D between East 56 & East 57 Street,Yes,Not Available,40.643022,-73.923026,51.732512,-1.2171341
@@ -603,7 +603,7 @@
 602,1,PS 286 Playground,"Avenue Y, between Brown & Haring streets",Yes,Yes,40.592388,-73.936367,NA,NA
 603,1,Real Good Park (Lie Playground),99 Street & 62 Avenue,Yes,Yes,40.735407,-73.857742,NA,NA
 604,1,Riverside Park (Boat Basin),"Riverside Drive to Hudson River, West 59th Street to Clair Place",No,Not Available,40.785871,-73.984487,NA,NA
-605,1,Riverside Park (Cafթ),"105th Street, next to Henry Hudson Parkway",No,Yes,40.785733,-73.984493,NA,NA
+605,1,Riverside Park (Cafͩ),"105th Street, next to Henry Hudson Parkway",No,Yes,40.785733,-73.984493,NA,NA
 606,1,Riverside Park (Claremont),West 124 Street & Riverside Drive,Yes,Not Available,40.811453,-73.963493,43.3294489,-85.9196777
 607,1,Riverside Park (Classic Playground),72nd to 79th streets between Hudson River and Henry Hudson Parkway,Yes,Not Available,40.787322,-73.980938,NA,NA
 608,1,Riverside Park (Dinosaur Playground),West 97 Street & Riverside Drive,Yes,Not Available,40.813415,-73.963021,41.7166075,-87.7321699
