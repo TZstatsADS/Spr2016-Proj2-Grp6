@@ -61,7 +61,7 @@ shinyUI(navbarPage("DIDI Toilets", id="nav",
                                               
                                               h3("Public Toilets"),
                                               
-                                              textInput("address", "Your Address", value = "350 5th Ave, New Yock, NY", width = NULL, placeholder = NULL),
+                                              textInput("address", "Your Address", value = "350 5th Ave, New York, NY", width = NULL, placeholder = NULL),
                                               actionButton("submit","Mark"),
                                               helpText("Select toilet types (leave them blank if no specification)"), 
                                               checkboxInput("handicap", "Handicap Accessible"),
