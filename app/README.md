@@ -1,5 +1,7 @@
-# Project: NYC Open Data
+# Project: DIDI Toilet
 ### App folder
 
-The App directory contains the app files for the Shiny App (i.e., ui.r and server.r).
+The link for our product:
+
+https://yusenwang.shinyapps.io/ADS_Project2_Group6_DIDI_Toilets/
 
