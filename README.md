@@ -20,3 +20,5 @@ proj/
 ![screenshot](doc/screenshot2.png)
 
 Our project link: https://yusenwang.shinyapps.io/ADS_Project2_Group6_DIDI_Toilets/
+
+or: https://chenluji.shinyapps.io/NYC_Toilet_Map/
