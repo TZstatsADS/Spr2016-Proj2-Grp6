@@ -1,9 +1,9 @@
-<b>About our project</b>
+<b>About Our Project</b>
 
 Colloborators:
 + Yusen Wang
 + Chenlu Ji
-+ Xuan Zuo
++ Jadie Zuo
 + Ruixiong Shi
 + Husam Shakir
 

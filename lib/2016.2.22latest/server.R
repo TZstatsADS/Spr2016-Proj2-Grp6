@@ -9,6 +9,8 @@ shinyServer(function(input, output, session) {
   ## Interactive Map ###########################################
   
   # Create the map
+  
+  
   output$map <- renderLeaflet({
     leaflet() %>%
       addTiles(
@@ -60,8 +62,7 @@ shinyServer(function(input, output, session) {
   # Create toiletIcon
   restroomIcon <- reactive({
    makeIcon(
-     #iconUrl = "https://github.com/TZstatsADS/project2-group6/blob/master/doc/toiletIcon/toilet18.png?raw=true",
-     iconUrl = paste("https://github.com/TZstatsADS/project2-group6/blob/master/doc/toiletIcon/toilet", as.character(input$icon), ".png?raw=true", sep = ""),
+      iconUrl = paste("https://github.com/TZstatsADS/project2-group6/blob/master/doc/toiletIcon/toilet", as.character(input$icon), ".png?raw=true", sep = ""),
      iconWidth = 25, iconHeight = 25,
      iconAnchorX = 13, iconAnchorY = 13
    ) %>%
@@ -69,10 +70,6 @@ shinyServer(function(input, output, session) {
   }) 
   
   a <- as.data.frame(decodeLine("qy}wF`dkbM`EpCdCaIgAs@qHaF{FuDyFuDgC~H^V"))
-#   a$lat1 = c(a$lat[-1],0)
-#   a$lon1 = c(a$lon[-1],0)
-#   a <- a[1:8,]
-#   print(a)
   
   # Add toilet and crime circles to map  
   observe({  
@@ -88,9 +85,7 @@ shinyServer(function(input, output, session) {
                   layerId="colorLegend")
     }
     else {
-#       print("hello")
-#       print(a$lat)
-#       print(a$lon)
+ 
       leafletProxy("map") %>%
         clearMarkers() %>%
         # addPolylines(lng=c(a$lon,a$lon1),lat=c(a$lat,a$lat1),color="red") %>%
@@ -101,10 +96,6 @@ shinyServer(function(input, output, session) {
   })
   
   # Show a circle at the given location
-#  show <- function(eventid, lat, lng) {
-#    leafletProxy("map") %>% addCircles(lng=lng,lat=lat, radius=400, fillColor="red",layerId = eventid)
-#  }
-  
   show <- reactive({
     function(eventid, lat, lng) {
     leafletProxy("map") %>% addCircles(lng=lng,lat=lat, radius=input$circleR, fillColor="red",layerId = eventid, group="overlays")
@@ -112,7 +103,7 @@ shinyServer(function(input, output, session) {
       return()
   })
   
-  # When map is clicked, show a circle
+  # When mouseover, show a circle
   observe({
     leafletProxy("map") %>% clearGroup("overlays") # %>%
     # leafletProxy("map") %>%
@@ -181,8 +172,7 @@ shinyServer(function(input, output, session) {
   
   # breaks <- hist(plot=FALSE, )
   
-  
-  
+
   
   ## Dynamic Map ###########################################
   

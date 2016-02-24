@@ -2,8 +2,8 @@ name: NYC_Public_Restroom_Project
 account: jadieplus
 server: shinyapps.io
 appId: 84981
-bundleId: 378885
+bundleId: 378933
 url: https://jadieplus.shinyapps.io/NYC_Public_Restroom_Project/
-when: 1456269433.78672
+when: 1456272263.87466
 asMultiple: FALSE
 asStatic: FALSE

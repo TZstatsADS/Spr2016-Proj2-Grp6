@@ -61,13 +61,16 @@ shinyUI(navbarPage("DIDI Toilets", id="nav",
                                               
                                               h3("Public Toilets"),
                                               
-                                              
                                               textInput("address", "Your Address", value = "350 5th Ave, New Yock, NY", width = NULL, placeholder = NULL),
                                               actionButton("submit","Mark"),
-                                              helpText("Please select toilet types (leave them blank if no specification)"), 
+                                              helpText("Select toilet types (leave them blank if no specification)"), 
                                               checkboxInput("handicap", "Handicap Accessible"),
                                               checkboxInput("yearround", "Open Year Round"),
+                                              
+                                          
+                                              
                                               helpText("Check to show crime data"),
+                                              #actionButton("submit","Add Crime Data"),
                                               checkboxInput("addcrime", "Add Crime Data"),
                                               numericInput("circleR", label = "Customize mouseover circle radius (meters):", value = 400, min = 1),
                                               selectInput("crime", "Crime Type", CrimeType, selected = "MURDER"),
@@ -120,6 +123,6 @@ shinyUI(navbarPage("DIDI Toilets", id="nav",
                                 )
                             )
                    ),
-                   tabPanel("About our project", includeMarkdown("docs/About.md")),
+                   tabPanel("About Our Project", includeMarkdown("docs/About.md")),
                    conditionalPanel("false", icon("crosshair"))
 ))
