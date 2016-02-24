@@ -208,8 +208,8 @@ crime$Long <- as.numeric(crime$Long)
 crime$hour <- as.numeric(format(as.POSIXct(crime$Occurrence.Date,format="%m/%d/%Y %I:%M:%S %p"),"%H"))
 hour.minute <- cbind(as.numeric(format(as.POSIXct(crime$Occurrence.Date,format="%m/%d/%Y %I:%M:%S %p"),"%H")), as.numeric(format(as.POSIXct(crime$Occurrence.Date,format="%m/%d/%Y %I:%M:%S %p"),"%M")))
 hour.minute <- as.data.frame(hour.minute)
-crime$minute <- ceiling((hour.minute$V1 * 60 + hour.minute$V2)/20)
+crime$minute <- ceiling((hour.minute$V1 * 60 + hour.minute$V2)/30)
 
 
 time.start <- 0
-time.end <- 72
+time.end <- 48
