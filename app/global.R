@@ -1,5 +1,11 @@
-
+library(RCurl)
+library(RJSONIO)
 library(dplyr)
+library(stringr)
+library(ggmap)
+library(taRifx.geo)
+
+
 
 # Data cleaning to get rid of records with no geo info
 # Original data NYPD_Motor_Vehicle_Collisions.csv is 119.5 MB, which is too large to be included in this repo
@@ -68,8 +74,8 @@ decodeLine <- function(encoded){
 }
 
 filter_crime<-function(lat,lng,radius){
-  latlimit<-0.003619/400*radius
-  lnglimit<-0.000316/400*radius
+  latlimit<-(radius)/110574    #1 deg = 110574 m     1m = 1/110574 deg
+  lnglimit<-(0.25*radius)/abs(111320*cos(lat))  #1 deg = 111320*cos(latitude) m    1m= 1/(111320*cos(latitude)) deg
   latrange_upper<-lat+latlimit
   latrange_lower<-lat-latlimit
   lngrange_upper<-lng+lnglimit
@@ -80,7 +86,7 @@ filter_crime<-function(lat,lng,radius){
 }
 # lat=40.748730
 # lng=-73.988315
-# filter_crime(lat,lng)
+# filter_crime(lat,lng,400)
 
 
 
@@ -202,8 +208,8 @@ crime$Long <- as.numeric(crime$Long)
 crime$hour <- as.numeric(format(as.POSIXct(crime$Occurrence.Date,format="%m/%d/%Y %I:%M:%S %p"),"%H"))
 hour.minute <- cbind(as.numeric(format(as.POSIXct(crime$Occurrence.Date,format="%m/%d/%Y %I:%M:%S %p"),"%H")), as.numeric(format(as.POSIXct(crime$Occurrence.Date,format="%m/%d/%Y %I:%M:%S %p"),"%M")))
 hour.minute <- as.data.frame(hour.minute)
-crime$minute <- ceiling((hour.minute$V1 * 60 + hour.minute$V2)/20)
+crime$minute <- ceiling((hour.minute$V1 * 60 + hour.minute$V2)/30)
 
 
 time.start <- 0
-time.end <- 72
+time.end <- 48
