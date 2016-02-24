@@ -74,8 +74,8 @@ decodeLine <- function(encoded){
 }
 
 filter_crime<-function(lat,lng,radius){
-  latlimit<-radius/110574    #1 deg = 110574 m     1m = 1/110574 deg
-  lnglimit<-(radius)/abs(111320*cos(lat))  #1 deg = 111320*cos(latitude) m    1m= 1/(111320*cos(latitude)) deg
+  latlimit<-(radius)/110574    #1 deg = 110574 m     1m = 1/110574 deg
+  lnglimit<-(0.25*radius)/abs(111320*cos(lat))  #1 deg = 111320*cos(latitude) m    1m= 1/(111320*cos(latitude)) deg
   latrange_upper<-lat+latlimit
   latrange_lower<-lat-latlimit
   lngrange_upper<-lng+lnglimit
