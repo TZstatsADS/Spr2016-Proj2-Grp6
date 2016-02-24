@@ -59,9 +59,10 @@ shinyUI(navbarPage("DIDI Toilets", id="nav",
                                               draggable = TRUE, top = 60, left = "auto", right = 20, bottom = "auto",
                                               width = 330, height = "auto",
                                               
-                                              h2("Public Toilets"),
+                                              h3("Public Toilets"),
                                               
-                                              textInput("address", "Your Address", value = "", width = NULL, placeholder = NULL),
+                                              
+                                              textInput("address", "Your Address", value = "350 5th Ave, New Yock, NY", width = NULL, placeholder = NULL),
                                               actionButton("submit","Mark"),
                                               helpText("Please select toilet types (leave them blank if no specification)"), 
                                               checkboxInput("handicap", "Handicap Accessible"),
@@ -76,12 +77,12 @@ shinyUI(navbarPage("DIDI Toilets", id="nav",
                                               numericInput("icon", label = "Customize toilet markers: enter an integer between 1 to 18", value = 18, min = 1, max = 18)
                                 ),
                                 absolutePanel(id="graphstuff",class = "panel panel-default", fixed=TRUE,
-                                              draggable = TRUE, top=60,left=60,right="auto", bottom="auto",width=380,
-                                              height="auto", style="opacity:0.85",
+                                              draggable = TRUE, top=60,left=10,right="auto", bottom="auto",width=300,
+                                              height=200, style="opacity:0.85",
                                               # div(style="padding: 8px; border-bottom: 1px solid #CCC; background: #FFFFEE;"),
                                               # h2("Crime around this Restroom"),
-                                              h3(textOutput("totalcrime")),
-                                              plotOutput("circ_plot",height=350)
+                                              h6(textOutput("totalcrime")),
+                                              plotOutput("circ_plot",height=200)
                                               
                             )
                                               

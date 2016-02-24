@@ -144,16 +144,14 @@ shinyServer(function(input, output, session) {
       xlon <- as.numeric(xlatlon[2])
       leafletProxy("map") %>% 
         addMarkers(lng=xlon,lat=xlat)
-      #       print(rlat)
-#       print(rlon)
-#       print(xlat)
-#       print(xlon)
+  
       event <- input$map_marker_click
       if (is.null(event))
         return()
       
       filtered_crime <- filter_crime(event$lat,event$lng,input$circleR)
       output$totalcrime <- renderText({
+        
         if (nrow(filtered_crime) == 0) {
           return(NULL)
         }
